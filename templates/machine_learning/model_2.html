@@ -4,6 +4,31 @@
 
 
 {% block content %}
-	<h3>Model 22222 inşallah.....</h3>
+
+<div class="models">	
+	<form method="POST" >
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<button type="submit" >Predict</button>
+	</form>
+
+	<h3><strong>Prediced Results:</strong></h3>
+	<p>{{y_predicted}}</p>
+	<h3><strong>R2 Score:</strong></h3>
+	<p>{{ r2_score }}</p>
+
+	<strong>Query : Result </strong>
+	{% for query, result in query_prediction %}
+			<li><strong>{{ query }}: {{ result }}</strong></li>
+	{% endfor %}
+
+</div>
+
+	
+
+
+
+
 
 {% endblock %}

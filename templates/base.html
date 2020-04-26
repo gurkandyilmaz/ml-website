@@ -4,7 +4,7 @@
 
 <html lang='en'>
 <head>
-	<title>BURA DOLACAK | Free as Always</title>
+	<title>Ortofoşol Ontologonco | 2020 </title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,19 +12,19 @@
 
 	<link rel="icon" href="{% static 'images/favicon3.ico' %}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/models.css' %}">
 
 </head>
 <body>
 	<a href="{% url 'base' %}">
-		<div class="header-image" >
-		</div>
+		<div class="header-image"></div>
 	</a>
 
  	<div class='topnavbar'>
 
-		<a href="{% url 'blog:home' %}">Home</a>
-		<a href="{% url 'blog:blog' %}">Blog</a>
-		<a href="{% url 'blog:about' %}">About</a>	
+		<a href="{% url 'blog:home' %}" class="{{ home_status }}">Home</a>
+		<a href="{% url 'blog:blog' %}" class="{{ blog_status }}">Blog</a>
+		<a href="{% url 'blog:about' %}" class="{{ about_status }}">About</a>	
 
  		
 		<div class="dropdown">
@@ -32,9 +32,9 @@
 				<i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content" id="myDropdown">
-				<a href="{% url 'machine-learning:model_1' %}">Model 1</a>
-				<a href="{% url 'machine-learning:model_2' %}">Model 2</a>
-				<a href="{% url 'machine-learning:model_3' %}">Model 3</a>
+				<a class="{{ model_1_status }}" href="{% url 'machine-learning:model_1' %}">Model 1</a>
+				<a class="{{ model_2_status }}" href="{% url 'machine-learning:model_2' %}">Model 2</a>
+				<a class="{{ model_3_status }}" href="{% url 'machine-learning:model_3' %}">Model 3</a>
 			</div>
 		</div>
 
