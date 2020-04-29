@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from .forms import QueryForm, PredictionForm
-from .models import Query, Prediction
+from .forms import QueryForm, PredictionForm, TitanicQueryForm, TitanicPredictionForm
+from .models import Query, Prediction, TitanicQuery, TitanicPrediction
 
 import os
 import joblib
@@ -52,7 +52,9 @@ def model_2(request):
 
 			query_predicted = np.round(regressor.predict(query_converted),4)
 			query_prediction = zip(query_converted, query_predicted)
-			r2 = r2_scorer(y, query_predicted)
+			if len(y) == len(query_predicted):
+				r2 = r2_scorer(y, query_predicted)
+			r2 = 0.0
 			related_query = Query.objects.get(query_text=query.query_text, pk=query.id)
 
 			prediction = Prediction(related_query=related_query, prediction_result=query_predicted, prediction_score=r2)
@@ -71,4 +73,17 @@ def model_2(request):
 def model_3(request):
 	context = context = {"model_3_status": "active"}
 
-	return render(request, 'machine_learning/model_3.html', context=context)
+	if request.method == 'POST':
+		query_form = TitanicQueryForm(request.POST)
+		if query_form.is_valid():
+			query = query_form.save(commit=False)		
+			query.query_time = timezone.now()
+			query.save()
+			
+			return render(request, 'machine_learning/model_3.html', context={'form': query_form})
+
+	else:
+		query_form = TitanicQueryForm()
+		query_predicted = "No predictions Available"
+
+	return render(request, 'machine_learning/model_3.html', context={'form':query_form, 'model_3_status':'active'})

@@ -5,9 +5,141 @@
 
 {% block content %}
 <div class="models">
-	<h3>Model 333333 inşallah.....</h3>
+	<h1>Titanic Survival Prediction</h1>
+	<div class="form-query">
+		<form role="form" id = "page_form" method="post" action="#">
+			{% csrf_token %}
+
+  			<div class="form-group">
+                <label for="passenger_class">Passenger Class: </label>             
+                <select id="passenger_class">
+                    
+                        <option value="first">First Class</option>
+                        <option value="second">Second Class</option>
+                        <option value="third">Third Class</option> 
+
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="passenger_gender">Passenger Gender: </label>               
+                <select id="passenger_gender">
+               
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>   
+
+                </select>
+            </div>
+            <br>
+
+            <div class="form-group">
+                <label for="sibling_spouse">Number of siblings and spouse: </label>
+                <select id="sibling_spouse">
+                    
+                        <option value="zero">0</option>
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                        <option value="four">4</option>   
+
+                </select>
+            </div>
+            <br>
+
+            <div class="form-group">
+                <label for="parent_children">Number of parents and children: </label>
+                <select id="parent_children">
+                    
+                        <option value="zero">0</option>
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                        <option value="four">4</option>   
+
+                </select>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="passenger_age">Passenger Age: </label>
+                <input type="text" name="passenger_age", placeholder="Age">
+            </div>
+            <br>
+
+            <div class="form-group">
+                <label for="passenger_fare">Passenger Fare: </label>
+                <input type="text" name="passenger_fare", placeholder="Fare">
+            </div>
+            <br>
+            The value:
+			<span class="output"></span>
+			<br>
+            <button class="btn btn-primary" type="submit" name="Submit"> Predict </button>
+
+
+
+            <h2>hidden visible field kullanarak form</h2>
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+
+			{% for field in form.visible_fields %}
+				
+				<br>{{ field }} {{ field.help_text }} <br> {{ field.errors }}
+				<br>
+			{% endfor %}
+			<br/>
+			<button class="btn btn-primary" type="submit" name="Submit"> Add the Page </button>
+		</form>
+
+	</div>
+
+
+	<br><br><br><br><br>
+	Form as_p aşağıda
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<button type="submit">Predict</button>
+		
+	</form>
+
+
+
+	<div class="select-label">
+	<h1>Selectbox aşağıda</h1>
+		<h3>Model 333333 inşallah.....</h3>
+		<p>
+			Select one :
+			<select id="select-box">
+				<option value="free">Free</option>
+				<option value="basic">Basic</option>
+				<option value="premium">Premium</option>
+			</select>
+		</p>
+		<p>
+			The value:
+			<span class="output"></span>
+		</p>	
+		<button onclick="getOption()">Check Option</button>
+	</div>
+	
 
 </div>
+
+
+
+
+<script type="text/javascript">
+		function getOption(){
+			selectElement = document.querySelector('#passenger_class');
+
+			output = selectElement.value;
+
+			document.querySelector('.output').textContent = output;
+		}
+
+</script>
 	
 
 {% endblock %}

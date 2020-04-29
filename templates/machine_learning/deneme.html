@@ -1,0 +1,65 @@
+<form method="post" action=""><input type="hidden" name="csrfmiddlewaretoken" value="cFIf1WNuNw3XfnD4aVurcCLuUbzq2kLRuQXvFFdDeOhevcsZURy5SHHGuQAu9sUx">
+            <div class="col-md-6 ui-sortable">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading ui-sortable-handle">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        </div>
+                        <h4 class="panel-title">Intent Feedback Add</h4>
+                    </div>
+                    <input type="hidden" name="module" value="340">
+ 		    <input type="hidden" name="log">
+                   <div class="panel-body">
+                        <div class="form-group">
+                            <label for="text">Query Label</label>
+                            
+                            <input type="text" class="form-control" name="text" id="text" placeholder="Query Label">
+                        </div>
+			<div class="form-group">
+                            <label for="predicted_intent">Predicted Intent</label>
+                            
+                            <select class="form-control" name="predicted_intent" id="predicted_intent">
+                                
+                                    <option value="Confirmation_No">Confirmation_No</option>
+                                
+                                    <option value="Confirmation_Yes">Confirmation_Yes</option>
+                                
+                                
+                            </select>
+                        </div>
+			<div class="form-group" id="container_true_intent" hidden="">
+                            <label for="true_intent">Correct Intent</label>
+                            
+                            <select class="form-control" name="true_intent" id="true_intent">
+                                
+                                    <option value="Confirmation_No">Confirmation_No</option>
+                                
+                                    <option value="Confirmation_Yes">Confirmation_Yes</option>
+                                
+                                
+                            </select>
+                        </div>
+			<div class="form-group">
+                            <label for="label">Feedback Status</label>
+                            
+                            <select class="form-control" name="label" id="label" onchange="labelChanged(this.value)">
+                              <option value="true">True</option>
+                              <option value="false">False</option>
+                            </select>
+                        </div>
+                        
+<div class="form-group">
+                            <label for="source">Source</label>
+                            
+                            <input type="text" class="form-control" id="source" name="source" placeholder="Source">
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-white btn-sm cancel-button" onclick="javascript:history.go(-1);" title="Cancel Changes">Cancel</button>
+                        <button type="submit" class="btn btn-primary btn-sm m-l-5 save-button" title="Save Changes">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
