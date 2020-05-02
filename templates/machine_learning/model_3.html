@@ -5,12 +5,125 @@
 
 {% block content %}
 <div class="models">
-	<h1>Titanic Survival Prediction</h1>
-	<div class="form-query">
-		<form role="form" id = "page_form" method="post" action="#">
-			{% csrf_token %}
 
-  			<div class="form-group">
+	<div class="row">
+		<div class="column side">
+			
+		</div>
+		<div class="column middle">
+			
+			<h1>Titanic Survival Prediction</h1>
+
+			<div class="form-query">
+				<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_3' %}">
+					{% csrf_token %}
+
+					{% for hidden in form.hidden_fields %}
+						{{ hidden }}
+					{% endfor %}
+
+					{% for field in form.visible_fields %}
+						<br>{{ field.help_text }} {{ field }}  {{ field.errors }}
+						<br>
+					{% endfor %}
+					<br>
+					<input class="btn btn-danger" type="submit" value="Predict">
+				</form>
+
+			</div>
+			<br><br><br>
+
+			<div class="result">
+				<h1>Prediction</h1>
+
+				<table>
+					<tr>
+						<th>---</th>
+						<th>Result</th>
+						<th>Probability (%)</th>
+					</tr>
+					<tr>
+						<td>--</td>
+						<td>{{predicted_category}}</td>
+						<td id="probability">{{probability}}</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>	
+
+		<div class="column side">
+			
+		</div>
+	</div>
+	
+
+
+	<br><br><br><br><br><br>
+
+
+
+<!-- 	<br><br><br><br><br>
+	<h2>Alternatif Form as_p aşağıda</h2>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<button type="submit">Predict sss</button>
+		
+	</form>
+ -->
+
+
+<!-- 	<div class="select-label">
+	<h1>Selectbox aşağıda</h1>
+		<h3>Model 333333 inşallah.....</h3>
+		<p>
+			Select one :
+			<select id="select-box">
+				<option value="free">Free</option>
+				<option value="basic">Basic</option>
+				<option value="premium">Premium</option>
+			</select>
+		</p>
+		<p>
+			The value:
+			<span class="output"></span>
+		</p>	
+		<button onclick="getOptionExample()">Check Option</button>
+	</div>
+	
+
+</div>
+
+
+
+
+<script type="text/javascript">
+		function getOption(){
+			selectElement = document.querySelector('#passenger_class');
+
+			output = selectElement.value;
+
+			document.querySelector('.select-output').textContent = output;
+		}
+
+		function getOptionExample(){
+			selectElement = document.querySelector('#select-box');
+
+			output = selectElement.value;
+
+			document.querySelector('.output').textContent = output;
+		}
+
+</script> -->
+	
+
+{% endblock %}
+
+
+
+<!-- <div class="form-group">
                 <label for="passenger_class">Passenger Class: </label>             
                 <select id="passenger_class">
                     
@@ -70,76 +183,10 @@
                 <input type="text" name="passenger_fare", placeholder="Fare">
             </div>
             <br>
+            <br>
+			
+            <button class="btn btn-primary" type="submit" name="Submit" onclick="getOption()"> Predict </button>
+            <br><br>
+
             The value:
-			<span class="output"></span>
-			<br>
-            <button class="btn btn-primary" type="submit" name="Submit"> Predict </button>
-
-
-
-            <h2>hidden visible field kullanarak form</h2>
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
-
-			{% for field in form.visible_fields %}
-				
-				<br>{{ field }} {{ field.help_text }} <br> {{ field.errors }}
-				<br>
-			{% endfor %}
-			<br/>
-			<button class="btn btn-primary" type="submit" name="Submit"> Add the Page </button>
-		</form>
-
-	</div>
-
-
-	<br><br><br><br><br>
-	Form as_p aşağıda
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p }}
-
-		<button type="submit">Predict</button>
-		
-	</form>
-
-
-
-	<div class="select-label">
-	<h1>Selectbox aşağıda</h1>
-		<h3>Model 333333 inşallah.....</h3>
-		<p>
-			Select one :
-			<select id="select-box">
-				<option value="free">Free</option>
-				<option value="basic">Basic</option>
-				<option value="premium">Premium</option>
-			</select>
-		</p>
-		<p>
-			The value:
-			<span class="output"></span>
-		</p>	
-		<button onclick="getOption()">Check Option</button>
-	</div>
-	
-
-</div>
-
-
-
-
-<script type="text/javascript">
-		function getOption(){
-			selectElement = document.querySelector('#passenger_class');
-
-			output = selectElement.value;
-
-			document.querySelector('.output').textContent = output;
-		}
-
-</script>
-	
-
-{% endblock %}
+			<span class="select-output"></span> -->

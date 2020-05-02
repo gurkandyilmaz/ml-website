@@ -5,13 +5,25 @@
 
 {% block content %}
 <div class="models">
-	<h3>Model 1 inşallah.....</h3>
-	<p>Test_X: <strong>{{x}}</strong></p>
-	<p>Test_Y: <strong>{{y}}</strong></p><br>
+	<div class="row">
+		<div class="columns side">
+			
+		</div>
 
-	<p>PREDICTED: <strong>{{y_predicted}}</strong></p>
-	<p>Score: <strong>{{r2_score}}</strong></p>
+		<div class="columns middle">
+			<h3>Model 1 inşallah.....</h3>
+			<p>Test_X: <strong>{{x}}</strong></p>
+			<p>Test_Y: <strong>{{y}}</strong></p><br>
 
+			<p>PREDICTED: <strong>{{y_predicted}}</strong></p>
+			<p>Score: <strong>{{r2_score}}</strong></p>
+		</div>
+		
+		<div class="columns side">
+			
+		</div>
+	
+	</div>	
 
 </div>
 

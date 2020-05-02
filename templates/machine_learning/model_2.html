@@ -5,49 +5,60 @@
 
 {% block content %}
 
-<div class="models">	
-	<form method="POST" >
-		{% csrf_token %}
-		{{ form.as_p }}
+<div class="models">
 
-		<button type="submit" >Predict</button>
-	</form>
+	<div class="row">
+		<div class="columns side">
+			
+		</div>
 
-	<h3><strong>Prediced Results:</strong></h3>
-	<p>{{y_predicted}}</p>
-	<h3><strong>R2 Score:</strong></h3>
-	<p>{{ r2_score }}</p>
+		<div class="columns middle">
+			<form method="POST" >
+				{% csrf_token %}
+				{{ form.as_p }}
 
-	<strong>Query : Result </strong>
-	{% for query, result in query_prediction %}
-			<li><strong>{{ query }}: {{ result }}</strong></li>
-	{% endfor %}
+				<button type="submit" >Predict</button>
+			</form>
 
+			<h3><strong>Prediced Results:</strong></h3>
+			<p>{{y_predicted}}</p>
+			<h3><strong>R2 Score:</strong></h3>
+			<p>{{ r2_score }}</p>
 
-	<br><br><br><br><br><br><br>
-
-	<b>İkinci alternatif form</b>
-	<form role="form" id = "page_form" method="post" action="#">
-
-			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
+			<strong>Query : Result </strong>
+			{% for query, result in query_prediction %}
+					<li><strong>{{ query }}: {{ result }}</strong></li>
 			{% endfor %}
 
-			{% for field in form.visible_fields %}
-				
-				<br>{{ field.help_text }} {{ field }} {{ field.errors }}<br>
-			{% endfor %}
-			<br/>
-			<button class="btn btn-primary" type="submit" name="Submit"> Add the Page </button>
-	</form>
+
+			<br><br><br><br><br><br><br>
+
+			<b>İkinci alternatif form</b>
+			<form role="form" id = "page_form" method="post" action="#">
+
+					{% csrf_token %}
+					{% for hidden in form.hidden_fields %}
+						{{ hidden }}
+					{% endfor %}
+
+					{% for field in form.visible_fields %}
+						
+						<br>{{ field.help_text }} {{ field }} {{ field.errors }}<br>
+					{% endfor %}
+					<br/>
+					<button class="btn btn-primary" type="submit" name="Submit"> Add the Page </button>
+			</form>
+		</div>
+		<div class="columns side">
+			
+		</div>
+		
+
+	</div>	
+	
 
 </div>
 
 	
-
-
-
-
 
 {% endblock %}

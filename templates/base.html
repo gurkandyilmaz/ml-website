@@ -44,14 +44,19 @@
  		</div>
  	</div>
 
+
 	<div class="content">
 		{% block content %}
 			<h3>Base Page</h3>
 			<img src="{% static 'images/main.jpg' %}" alt="Main Picture">
+			<br><br>
+			
 		{% endblock %}
+		<button onclick="topFunction()" id="topBtn" title="Go to Top">Top</button>
 	</div>
 
 <script>
+// Dropdown Menu
 /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -66,7 +71,29 @@ window.onclick = function(e) {
     }
   }
 }
+
+// Top scroll button
+topbutton = document.getElementById('topBtn');
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction(){
+	if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+		topbutton.style.display = "block";
+	} else {
+		topbutton.style.display = "none";
+	}
+}
+
+function topFunction() {
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
+}
+
 </script>
+
+
+	
+
 
 </body>
 </html>

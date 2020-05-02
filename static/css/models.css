@@ -2,3 +2,40 @@
 	padding-top: 50px;
 	padding-left: 450px;
 }
+
+
+.content .models table {
+
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+
+.content .models td,th {
+	border: 2px solid #696969;
+	text-align: left;
+	padding: 8px;
+}
+
+.content .models tr:nth-child(even) {
+	background-color: #dddddd;
+
+}
+
+.content .models .column {
+	float: left;
+	padding: 10px;
+}
+.content .models .column .side {
+	width: 20%;
+}
+
+.content .models .column .middle {
+	width: 60%;
+}
+
+.content .models .row:after {
+	content: "";
+	display: table;
+	clear: both;
+}

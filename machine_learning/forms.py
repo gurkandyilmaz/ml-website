@@ -27,9 +27,21 @@ class TitanicQueryForm(forms.ModelForm):
 	# passenger_fare = forms.DecimalField(help_text="Passenger Fare")
 
 
+
 	class Meta:
 		model = TitanicQuery
-		fields = ('passenger_gender','passenger_class', 'passenger_age', 'sibling_spouse','parent_children', 'passenger_fare')
+		fields = ('passenger_gender','passenger_class', 'passenger_age', 'sibling_spouse', 'parent_children', 'passenger_fare',)
+		help_texts = {
+			'passenger_gender':'Passenger Gender',
+			'passenger_class':'Passenger Class', 
+			'passenger_age':'Passenger Age',
+			'sibling_spouse':'Number of Siblings and Spouse',
+			'parent_children':'Number of Parents and Children',
+			'passenger_fare':'Passenger Fare'}
+
 
 class TitanicPredictionForm(forms.ModelForm):
-	pass
+	
+	class Meta:
+		model = TitanicPrediction
+		fields = ('prediction_result', 'prediction_probability_0', 'prediction_probability_1')
