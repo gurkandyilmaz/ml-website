@@ -37,11 +37,12 @@ class TitanicQuery(models.Model):
 	query_time = models.DateTimeField(default=timezone.now)
 
 
+	class Meta:
+		verbose_name_plural="TitanicQueries"
+
+
 	def __str__(self):
 		return self.passenger_gender
-
-	class Meta:
-    	verbose_name_plural = "TitanicQueries"
 
 
 class TitanicPrediction(models.Model):
