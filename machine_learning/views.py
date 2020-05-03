@@ -109,7 +109,11 @@ def model_3(request):
 			predicted_category = knn_clf.predict(scaled_query_array)
 			probability = knn_clf.predict_proba(scaled_query_array)
 
-			prediction = TitanicPrediction(related_query=related_query, prediction_result=predicted_category[0], prediction_probability_0=probability[0][0], prediction_probability_1=probability[0][1])
+			prediction = TitanicPrediction(related_query=related_query, 
+											prediction_result=predicted_category[0], 
+											prediction_probability_0=probability[0][0], 
+											prediction_probability_1=probability[0][1],
+											prediction_time=timezone.now())
 			prediction.save()
 
 			if predicted_category[0] == 1:

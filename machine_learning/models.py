@@ -38,7 +38,7 @@ class TitanicQuery(models.Model):
 
 
 	class Meta:
-		verbose_name_plural="TitanicQueries"
+		verbose_name_plural="Titanic Queries"
 
 
 	def __str__(self):
@@ -50,7 +50,11 @@ class TitanicPrediction(models.Model):
 	prediction_result = models.IntegerField()
 	prediction_probability_0 = models.DecimalField(max_digits=5, decimal_places=4)
 	prediction_probability_1 = models.DecimalField(max_digits=5, decimal_places=4)
+	prediction_time = models.DateTimeField(default=timezone.now)
+
+	class Meta:
+		verbose_name_plural = "Titanic Predictions"
 
 
 	def __str__(self):
-		return self.related_query
+		return str(self.prediction_result)

@@ -26,7 +26,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = '+wlzc(%+sutn4kzez7h3mb455-jn)b-bxwjt^j0wxx86ieu&en'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com' , '0.0.0.0']
 
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
-    'machine_learning',
+    'blog.apps.BlogConfig',
+    'machine_learning.apps.MachineLearningConfig',
 ]
 
 MIDDLEWARE = [
@@ -83,10 +83,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'originai_db',
-        'USER': 'grkn',
-        'PASSWORD': '',
+        'USER': 'originai_psql',
+        'PASSWORD': '2020AIadmin',
         'HOST': 'localhost',
-        'PORT': ','
+        'PORT': '',
     }
 }
 
