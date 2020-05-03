@@ -40,6 +40,9 @@ class TitanicQuery(models.Model):
 	def __str__(self):
 		return self.passenger_gender
 
+	class Meta:
+    	verbose_name_plural = "TitanicQueries"
+
 
 class TitanicPrediction(models.Model):
 	related_query = models.ForeignKey(TitanicQuery, on_delete=models.CASCADE)
@@ -49,4 +52,4 @@ class TitanicPrediction(models.Model):
 
 
 	def __str__(self):
-		self.related_query
+		return self.prediction_result
