@@ -53,4 +53,4 @@ class TitanicPrediction(models.Model):
 
 
 	def __str__(self):
-		return self.prediction_result
+		return self.related_query
