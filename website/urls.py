@@ -19,7 +19,7 @@ from blog.views import base
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('idari/', admin.site.urls),
     path('', base, name='base'),
     path('website/', include('blog.urls')),
     path('machine-learning/', include('machine_learning.urls')),
