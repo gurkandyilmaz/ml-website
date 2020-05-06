@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 
@@ -29,11 +29,17 @@ class TitanicQuery(models.Model):
 	gender_choices = [('female', 'Female'),('male', 'Male'),]
 
 	passenger_class = models.IntegerField(choices=class_choices, validators=[MinValueValidator(limit_value=0)])
-	passenger_age = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(limit_value=1)])
-	sibling_spouse = models.IntegerField(validators=[MinValueValidator(limit_value=0)])
-	parent_children = models.IntegerField(validators=[MinValueValidator(limit_value=0)])
+	
 	passenger_gender = models.CharField(max_length=10, choices=gender_choices)
+	
+	passenger_age = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(limit_value=1)])
+	
+	sibling_spouse = models.IntegerField(validators=[MinValueValidator(limit_value=0), MaxValueValidator(limit_value=10)])
+	
+	parent_children = models.IntegerField(validators=[MinValueValidator(limit_value=0), MaxValueValidator(limit_value=10)])
+	
 	passenger_fare = models.DecimalField(max_digits=7, decimal_places=4, validators=[MinValueValidator(limit_value=0)])
+	
 	query_time = models.DateTimeField(default=timezone.now)
 
 

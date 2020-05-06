@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path, re_path
-from blog.views import base
+
+from blog import views as blog_views
 
 
 urlpatterns = [
     path('idari/', admin.site.urls),
-    path('', base, name='base'),
+    path('', blog_views.base, name='base'),
     path('website/', include('blog.urls')),
     path('machine-learning/', include('machine_learning.urls')),
+    path('accounts/login/', blog_views.user_login, name="login-page"),
+    path('accounts/logout/', blog_views.user_logout, name="logout-page"),
 ]

@@ -7,12 +7,14 @@
 	<title>Ortofoşol Ontologonco | 2020 </title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
 
 
 	<link rel="icon" href="{% static 'images/favicon3.ico' %}">
 	<link rel="stylesheet" href="{% static 'css/base.css' %}">
-	<link rel="stylesheet" href="{% static 'css/models.css' %}">
+
 
 </head>
 <body>
@@ -28,7 +30,7 @@
 
  		
 		<div class="dropdown">
-			<button class="dropbtn" onclick="myFunction()">ML Models
+			<button class="dropbtn" onclick="myFunction()">Machine Learning
 				<i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content" id="myDropdown">
@@ -39,23 +41,92 @@
 		</div>
 
  		<div class="topnavbar-right">
- 			<a href="#">Register</a>
- 			<a href="#">Log in</a>
+ 			{% if user.is_authenticated %}
+ 				<h3>{{ user.username }}</h3>
+ 				<a href="{% url 'logout-page' %}">Log Out</a>
+ 			{% else %}
+ 				<a href="#">Register</a>
+ 				<a href="{% url 'login-page' %}">Log in</a>
+ 			{% endif %}
+ 			
  		</div>
  	</div>
 
 
 	<div class="content">
 		{% block content %}
-			<h3>Base Page</h3>
-			<img src="{% static 'images/main.jpg' %}" alt="Main Picture">
+		
+			<div class="panel panel-jumbo">
+				<h3 class="welcome">Welcome!</h3>
+				{% if user.is_authenticated %}
+					<p>Selam, {{ user.username }}</p>
+					<p>Last Login: {{ user.last_login }}</p>
+					<p>Registered at: {{ user.date_joined }}</p>
+				{% else %}
+					<a href="https://pbs.twimg.com/media/BVvHBzgCEAE9fu2.jpg" target="_blank">BEDAVA TATİL FIRSATI !!!</a>
+				{% endif %}
+				  
+			</div>
+
+			<div class="panel panel-primary">
+              <div class="panel-heading">Available Models</div>
+	              <div class="panel-body">
+	                <ol>
+	                  <li>Titanic Survival Prediction</li>
+	                  <li>Twitter Toxic Comment Classification</li>
+	                  <li>Text Preprocessing</li>
+	                  <li>-------</li>
+	                  <li>-------</li>
+	                </ol>
+	              </div>
+            </div>
+            <img src="{% static 'images/main.jpg' %}" alt="Main Picture">
 			<br><br>
 			
 		{% endblock %}
 		<button onclick="topFunction()" id="topBtn" title="Go to Top">Top</button>
 	</div>
 
-<script>
+<script type="text/javascript">
+// Dropdown Menu
+/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+
+<script type="text/javascript">
+// Top scroll button
+topbutton = document.getElementById('topBtn');
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction(){
+	if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+		topbutton.style.display = "block";
+	} else {
+		topbutton.style.display = "none";
+	}
+}
+
+function topFunction() {
+	document.body.scrollTop = 0;
+	document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+<!-- <script>
 // Dropdown Menu
 /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -71,7 +142,8 @@ window.onclick = function(e) {
     }
   }
 }
-
+</script>
+<script type="text/javascript">
 // Top scroll button
 topbutton = document.getElementById('topBtn');
 window.onscroll = function() {scrollFunction()};
@@ -89,7 +161,8 @@ function topFunction() {
 	document.documentElement.scrollTop = 0;
 }
 
-</script>
+</script> -->
+
 
 
 	

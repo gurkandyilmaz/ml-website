@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
+from django.utils import timezone
 
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 
 from .forms import QueryForm, PredictionForm, TitanicQueryForm, TitanicPredictionForm
 from .models import Query, Prediction, TitanicQuery, TitanicPrediction
@@ -31,12 +33,14 @@ y_predicted = regressor.predict(x)
 r2_score = r2_scorer(y,y_predicted)
 
 # Create your views here.
+@login_required
 def model_1(request):
 	context = {'y_predicted': y_predicted, 'r2_score': r2_score, 'x':x, 'y':y, "model_1_status": "active"}
 
 	return render(request, 'machine_learning/model_1.html', context=context)
 
 
+@login_required
 def model_2(request):
 	context = {"model_2_status": "active"}
 
@@ -72,6 +76,7 @@ def model_2(request):
 	return render(request, 'machine_learning/model_2.html', context={'form': query_form, 'y_predicted':query_predicted, 'model_2_status':"active"})
 
 
+@login_required
 def model_3(request):
 	context = context = {"model_3_status": "active"}
 
@@ -130,3 +135,5 @@ def model_3(request):
 		query_predicted = "No predictions Available"
 
 	return render(request, 'machine_learning/model_3.html', context={'form':query_form, 'model_3_status':'active'})
+
+
