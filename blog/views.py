@@ -5,20 +5,21 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
-from .blog_forms import AuthForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
 
 # Create your views here.
 
 def base(request):
-	
-
-	return render(request, 'base.html')
-
-
-def home(request):
 	context = {"home_status": "active"}
 
-	return render(request, 'blog/home.html', context=context)
+	return render(request, 'base.html', context=context)
+
+
+# def home(request):
+# 	context = {"home_status": "active"}
+
+# 	return render(request, 'blog/home.html', context=context)
 
 
 def blog(request):
@@ -36,7 +37,7 @@ def about(request):
 def user_login(request):
 	
 	if request.method == "POST":
-		form = AuthForm(request.POST)
+		form = AuthenticationForm(request.POST)
 
 		username = request.POST.get("username")
 		password = request.POST.get("password")
@@ -52,9 +53,9 @@ def user_login(request):
 		else:
 			return HttpResponse("INVALID User details.")
 	else:
-		form = AuthForm()
+		form = AuthenticationForm()
 
-		return render(request, 'blog/login.html', {'form':form} )
+		return render(request, 'registration/login.html', {'form':form} )
 
 
 def user_logout(request):
@@ -63,28 +64,23 @@ def user_logout(request):
 	return redirect(reverse("login-page"))
 
 
-# def user_login(request):
+def user_register(request):
+	registered = False
 
-# 	if request.method == 'POST':
-# 		username = request.POST.get("username")
-# 		password = request.POST.get("password")
+	if request.method == "POST":
 
-# 		user = authenticate(username=username, password=password)
+		form = UserCreationForm(request.POST)
 
-# 		if user:
-# 			if user.is_active:
-# 				login(request, user)
-# 				return HttpResponseRedirect(reverse('base'))
-# 			else:
-# 				return HttpResponse("Your Account is DISABLED.")
-# 		else:
-# 			print(f"Invalid login details {username}, {password}")
-# 			return HttpResponse("INVALID login details supplied.")
-# 	else:
-# 		return render(request, 'blog/login.html', {})
+		if form.is_valid():
+			form.save()
+			registered = True
 
+			return redirect(reverse('login-page'))
+		else:
+			print(form.errors)
+	else:
+		
+		form = UserCreationForm()
 
-# def user_logout(request):
-# 	logout(request)
+	return render(request, 'registration/register.html', {'form':form, 'registered':registered})
 
-# 	return HttpResponseRedirect(reverse("base"))

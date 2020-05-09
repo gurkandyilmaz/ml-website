@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
@@ -27,6 +28,8 @@ class Prediction(models.Model):
 class TitanicQuery(models.Model):
 	class_choices = [(1,'First Class'), (2,'Second Class'), (3,'Third Class'),]
 	gender_choices = [('female', 'Female'),('male', 'Male'),]
+
+	user = models.CharField(max_length=100, default="None")
 
 	passenger_class = models.IntegerField(choices=class_choices, validators=[MinValueValidator(limit_value=0)])
 	

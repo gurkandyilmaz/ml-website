@@ -24,7 +24,7 @@
 
  	<div class='topnavbar'>
 
-		<a href="{% url 'blog:home' %}" class="{{ home_status }}">Home</a>
+		<a href="{% url 'base' %}" class="{{ home_status }}">Home</a>
 		<a href="{% url 'blog:blog' %}" class="{{ blog_status }}">Blog</a>
 		<a href="{% url 'blog:about' %}" class="{{ about_status }}">About</a>	
 
@@ -45,7 +45,7 @@
  				<h3>{{ user.username }}</h3>
  				<a href="{% url 'logout-page' %}">Log Out</a>
  			{% else %}
- 				<a href="#">Register</a>
+ 				<a href="{% url 'register-page' %}">Register</a>
  				<a href="{% url 'login-page' %}">Log in</a>
  			{% endif %}
  			

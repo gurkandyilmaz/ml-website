@@ -26,4 +26,5 @@ urlpatterns = [
     path('machine-learning/', include('machine_learning.urls')),
     path('accounts/login/', blog_views.user_login, name="login-page"),
     path('accounts/logout/', blog_views.user_logout, name="logout-page"),
+    path('accounts/register/', blog_views.user_register, name="register-page"),
 ]

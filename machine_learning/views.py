@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .forms import QueryForm, PredictionForm, TitanicQueryForm, TitanicPredictionForm
 from .models import Query, Prediction, TitanicQuery, TitanicPrediction
@@ -90,12 +91,15 @@ def model_3(request):
 	with open(knn_clf_path, 'rb') as knnclf:
 		knn_clf = joblib.load(knnclf)
 
+	if request.user.is_authenticated:
+		username = request.user.username
 
 	if request.method == 'POST':
 		query_form = TitanicQueryForm(request.POST)
 		if query_form.is_valid():
 			query = query_form.save(commit=False)		
 			query.query_time = timezone.now()
+			query.user = username
 			query.save()
 
 			related_query = TitanicQuery(id=query.id)
