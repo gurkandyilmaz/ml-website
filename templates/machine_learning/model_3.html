@@ -7,10 +7,6 @@
 <div class="models">
 
 	<div class="row">
-		<div class="column side">
-
-			
-		</div>
 
 		<div class="column middle">
 			
@@ -61,7 +57,7 @@
 		</div>	
 
 		<div class="column side">
-						<div class="result">
+<!-- 			<div class="result">
 				<h1>Prediction</h1>
 
 				<table>
@@ -81,43 +77,41 @@
 					
 				</table>
 			</div>
-			<h1><a href="https://www.kaggle.com/c/titanic"> Kaggle Titanic</a></h1>
+
+			<h3><a href="https://www.kaggle.com/c/titanic"> Kaggle Titanic</a></h3>
 			<p><h4> The competition is simple: use machine learning to create a model that predicts which passengers survived the Titanic shipwreck.</h4></p>
 			<p><h4> On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” RMS Titanic sank after colliding with an iceberg.</h4></p>
 			<p><h4> Unfortunately, there weren’t enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.</h4></p>
 			<p><h4> While there was some element of luck involved in surviving, it seems some groups of people were more likely to survive than others.</h4></p>
 			<p><h4> In this challenge, we ask you to build a predictive model that answers the question: “what sorts of people were more likely to survive?”</h4></p>
-			<p><h4> using passenger data (ie name, age, gender, socio-economic class, etc).</h4></p>
+			<p><h4> using passenger data (ie name, age, gender, socio-economic class, etc).</h4></p> -->
+
+			<div class="panel panel-model">
+				<h3 class="result">Result</h3>
+				
+				{% if predicted_category and probability %}
+					<p><strong>{{predicted_category}}</strong></p>
+					<p>Probability: {{probability}}</p>
+				{% else %}
+					<p>No prediction available</p>
+					<p>Probability: No prediction available</p>
+				{% endif %}
+					
+				
+				
+				  
+			</div>
 			<br />
-			<hr />		
-		</div>
+			<hr />
+		
+
+	
+		
+		</div>	
+
 	</div>
-	
+</div>
 
-
-	<br /><br />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-<script type="text/javascript">
-// AJAX
-$(document).ready(function(e){
-	e.preventDefault();
-	var frm = $('#page_form');
-	frm.submit(function(){
-		$.ajax({
-			type: frm.attr('method'),
-			url: frm.attr('action'),
-			data: frm.serialize(),
-			success: function (data){
-				$('#result').html(data);
-			}
-		});
-		return false;
-	});
-
-});
-	
-</script>
 
 <!-- 	<br><br><br><br><br>
 	<h2>Alternatif Form as_p aşağıda</h2>

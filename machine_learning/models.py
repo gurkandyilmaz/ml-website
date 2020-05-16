@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, MaxLengthValidator
 # Create your models here.
 
 
@@ -67,3 +67,39 @@ class TitanicPrediction(models.Model):
 
 	def __str__(self):
 		return str(self.prediction_result)
+
+
+class TextProcessing(models.Model):
+	user = models.CharField(max_length=100, default="None")
+	text_area = models.TextField(validators=[MaxLengthValidator(500)])
+	# text_area = models.CharField(max_length=1000)
+	processing_time = models.DateTimeField(default=timezone.now)
+
+	make_lowercase = models.BooleanField(default=False)
+	remove_stopwords = models.BooleanField(default=False)
+	remove_numbers = models.BooleanField(default=False)
+	remove_html_tags = models.BooleanField(default=False)
+	remove_special_characters = models.BooleanField(default=False)
+	remove_url = models.BooleanField(default=False)
+
+
+	class Meta:
+		verbose_name_plural = "Text Processing"
+
+
+	def __str__(self):
+		return self.text_area[:10]
+
+
+class TextProcessingResult(models.Model):
+	related_text = models.ForeignKey(TextProcessing, on_delete=models.CASCADE)
+	text_result = models.CharField(max_length=1000)
+	text_result_time = models.DateTimeField(default=timezone.now)
+
+
+	class Meta:
+		verbose_name_plural = "Text Processing Results"
+
+
+	def __str__(self):
+		return self.related_text.text_area[:10]

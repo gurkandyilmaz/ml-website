@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Query, Prediction, TitanicQuery, TitanicPrediction
+from .models import Query, Prediction, TitanicQuery, TitanicPrediction, TextProcessing, TextProcessingResult
 
 
 class QueryForm(forms.ModelForm):
@@ -44,4 +44,38 @@ class TitanicPredictionForm(forms.ModelForm):
 	
 	class Meta:
 		model = TitanicPrediction
-		fields = ('prediction_result', 'prediction_probability_0', 'prediction_probability_1')
+		fields = ('prediction_result', 'prediction_probability_0', 'prediction_probability_1',)
+
+
+
+class TextProcessingForm(forms.ModelForm):
+
+
+	class Meta:
+		model = TextProcessing
+		fields = ('text_area', 'make_lowercase', 'remove_stopwords', 'remove_numbers', 'remove_html_tags', 'remove_special_characters', 'remove_url',)
+		help_texts = {
+			'text_area':'Enter your text HERE (DO NOT USE the character ">")',
+			'make_lowercase': 'Lowercase',
+			'remove_stopwords': 'Stopwords',
+			'remove_numbers':'Numbers',
+			'remove_html_tags':'HTML',
+			'remove_special_characters':'Special Characters',
+			'remove_url':'URL',
+			}
+		widgets = {
+            'text_area': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
+
+
+# class TextProcessingResultForm(forms.ModelForm):
+
+# 	class Meta:
+# 		model = TextProcessingResult
+# 		fields = ('text_result',)
+# 		help_texts = {
+# 			'text_result':'The result will be shown HERE'
+# 			}
+# 		widgets = {
+#             'text_result': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+#         }

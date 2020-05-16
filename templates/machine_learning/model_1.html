@@ -6,26 +6,88 @@
 {% block content %}
 <div class="models">
 	<div class="row">
-		<div class="columns side">
-			
+
+		<div class="column middle">
+				<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_1' %}">
+					{% csrf_token %}
+
+<!-- 					{% for hidden in text_form.hidden_fields %}
+						{{ hidden }}
+					{% endfor %}
+
+					{% for field in text_form.visible_fields %}
+						<br />{{ field.help_text }} <br /> {{ field }} <br /> {{ field.errors }}
+						<br />
+					{% endfor %} -->
+					 
+					<br>
+					{{ text_form.non_field_errors }}
+					<div class="text_area" >
+					    {{ text_form.text_area.help_text }} <br />
+					    {{ text_form.text_area }}
+					    {{ text_form.text_area.errors }}
+					</div>
+
+					<div class="checkbox">
+						<span>
+							{{ text_form.remove_stopwords }} 
+							{{ text_form.remove_stopwords.help_text }}	
+						</span>
+						<span>
+							{{ text_form.make_lowercase }} 
+							{{ text_form.make_lowercase.help_text }}
+						</span>
+						<span>
+							{{ text_form.remove_numbers }} 
+							{{ text_form.remove_numbers.help_text }}	
+						</span>
+
+						<span>
+							{{ text_form.remove_special_characters }} 
+							{{ text_form.remove_special_characters.help_text }}	
+						</span>
+						<span>
+							{{ text_form.remove_html_tags }} 
+							{{ text_form.remove_html_tags.help_text }}
+						</span>
+						<span>
+							{{ text_form.remove_url }} 
+							{{ text_form.remove_url.help_text }}
+						</span>
+
+					</div>
+						
+						<br><br>
+					<input type="submit" value="Process" class="process">
+					  
+				</form>
+
 		</div>
 
-		<div class="columns middle">
-			<h3>Model 1 inşallah.....</h3>
-			<p>Test_X: <strong>{{x}}</strong></p>
-			<p>Test_Y: <strong>{{y}}</strong></p><br>
 
-			<p>PREDICTED: <strong>{{y_predicted}}</strong></p>
-			<p>Score: <strong>{{r2_score}}</strong></p>
+		
+		<div class="column side">
+			<br>
+			<label for="text_result">Result will be shown HERE</label><br />
+			<textarea id="text_result" rows="20" cols="80">
+				{{ result_text }}
+
+			</textarea>
+
+<!-- 			<label for="text_result">Result</label><br />
+			<textarea id="text_result" rows="20" cols="80">{{result_text}}</textarea> -->
+
 		</div>
 		
-		<div class="columns side">
-			
-		</div>
-	
+
+
 	</div>	
 
 </div>
 
 
 {% endblock %}
+
+
+
+
