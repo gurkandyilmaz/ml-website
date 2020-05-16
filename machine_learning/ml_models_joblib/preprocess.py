@@ -1,19 +1,20 @@
 # Text Preprocessing
 import nltk
 import re
+nltk.download("stopwords")
 
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
 from bs4 import BeautifulSoup
 
-nltk.download("stopwords")
+
 
 print(__name__)
 
 class Preprocess():
     
     def __init__(self):
-        self.eng_stopword_list = stopwords.words("english")
+        self.eng_stopword_list = set(stopwords.words("english"))
         # 'no' and 'not' may be useful in sentiment analysis
         self.eng_stopword_list.remove('no')
         self.eng_stopword_list.remove('not')
