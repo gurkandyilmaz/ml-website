@@ -1,7 +1,7 @@
 # Text Preprocessing
 import nltk
 import re
-nltk.download("stopwords")
+nltk.download("popular")
 
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
