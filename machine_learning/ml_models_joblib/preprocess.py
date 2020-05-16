@@ -1,9 +1,12 @@
 # Text Preprocessing
+import nltk
+import re
+
 from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
 from bs4 import BeautifulSoup
-import re
 
+nltk.download("stopwords")
 
 print(__name__)
 

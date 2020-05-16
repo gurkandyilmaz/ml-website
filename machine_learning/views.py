@@ -21,10 +21,6 @@ import numpy as np
 
 ml_models_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ml_models_joblib')
 
-print(ml_models_directory)
-
-
-
 # Create your views here.
 @login_required
 def model_1(request):
@@ -38,15 +34,14 @@ def model_1(request):
 
 	if request.method == "POST":
 		text_form = TextProcessingForm(request.POST)
-		print("REQUSET.POST:",request.POST)
+		
 
 		if text_form.is_valid():
 			text = text_form.save(commit=False)
 			text.user = username
 			text.processing_time = timezone.now()
 			text.save()
-			print(text_form.cleaned_data.get('remove_stopwords'))
-			print(text_form.cleaned_data.get('make_lowercase'))
+			
 
 			raw_text = text_form.cleaned_data.get('text_area')
 			make_lowercase = text_form.cleaned_data.get('make_lowercase')
