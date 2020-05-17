@@ -35,13 +35,13 @@ class TitanicQuery(models.Model):
 	
 	passenger_gender = models.CharField(max_length=10, choices=gender_choices)
 	
-	passenger_age = models.DecimalField(max_digits=3, decimal_places=1, validators=[MinValueValidator(limit_value=1)])
+	passenger_age = models.DecimalField(max_digits=2, decimal_places=0, validators=[MinValueValidator(limit_value=1)])
 	
 	sibling_spouse = models.IntegerField(validators=[MinValueValidator(limit_value=0), MaxValueValidator(limit_value=10)])
 	
 	parent_children = models.IntegerField(validators=[MinValueValidator(limit_value=0), MaxValueValidator(limit_value=10)])
 	
-	passenger_fare = models.DecimalField(max_digits=7, decimal_places=4, validators=[MinValueValidator(limit_value=0)])
+	passenger_fare = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(limit_value=0)])
 	
 	query_time = models.DateTimeField(default=timezone.now)
 
@@ -70,11 +70,14 @@ class TitanicPrediction(models.Model):
 
 
 class TextProcessing(models.Model):
+	language_choices = [('turkish', 'TR'),('english', 'ENG')]
+
 	user = models.CharField(max_length=100, default="None")
-	text_area = models.TextField(validators=[MaxLengthValidator(500)])
+	text_area = models.TextField(validators=[MaxLengthValidator(1000)])
 	# text_area = models.CharField(max_length=1000)
 	processing_time = models.DateTimeField(default=timezone.now)
 
+	language_choice = models.CharField(max_length=10, choices=language_choices, default='TR')
 	make_lowercase = models.BooleanField(default=False)
 	remove_stopwords = models.BooleanField(default=False)
 	remove_numbers = models.BooleanField(default=False)

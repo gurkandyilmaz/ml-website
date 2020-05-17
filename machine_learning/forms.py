@@ -19,14 +19,6 @@ class PredictionForm(forms.ModelForm):
 
 
 class TitanicQueryForm(forms.ModelForm):
-	# passenger_class = forms.IntegerField(help_text="Passenger Class")
-	# passenger_age = forms.IntegerField(help_text="Passenger Age")
-	# sibling_spouse = forms.IntegerField(help_text="number of siblings and spouse")
-	# parent_children = forms.IntegerField(help_text="number of parent and children")
-	# passenger_gender = forms.CharField(help_text="Passenger Gender")
-	# passenger_fare = forms.DecimalField(help_text="Passenger Fare")
-
-
 
 	class Meta:
 		model = TitanicQuery
@@ -37,7 +29,7 @@ class TitanicQueryForm(forms.ModelForm):
 			'passenger_age':'Passenger Age',
 			'sibling_spouse':'Number of Siblings and Spouse',
 			'parent_children':'Number of Parents and Children',
-			'passenger_fare':'Passenger Fare'}
+			'passenger_fare':'Passenger Fare (Ticket Cost)'}
 
 
 class TitanicPredictionForm(forms.ModelForm):
@@ -47,15 +39,13 @@ class TitanicPredictionForm(forms.ModelForm):
 		fields = ('prediction_result', 'prediction_probability_0', 'prediction_probability_1',)
 
 
-
 class TextProcessingForm(forms.ModelForm):
-
 
 	class Meta:
 		model = TextProcessing
-		fields = ('text_area', 'make_lowercase', 'remove_stopwords', 'remove_numbers', 'remove_html_tags', 'remove_special_characters', 'remove_url',)
+		fields = ('text_area', 'language_choice', 'make_lowercase', 'remove_stopwords', 'remove_numbers', 'remove_html_tags', 'remove_special_characters', 'remove_url',)
 		help_texts = {
-			'text_area':'Enter your text HERE (DO NOT USE the character ">")',
+			'language_choice':'Specify Language',
 			'make_lowercase': 'Lowercase',
 			'remove_stopwords': 'Stopwords',
 			'remove_numbers':'Numbers',

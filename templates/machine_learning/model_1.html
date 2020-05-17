@@ -1,26 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block content %}
 <div class="models">
 	<div class="row">
-
 		<div class="column middle">
-				<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_1' %}">
-					{% csrf_token %}
-
-<!-- 					{% for hidden in text_form.hidden_fields %}
-						{{ hidden }}
-					{% endfor %}
-
-					{% for field in text_form.visible_fields %}
-						<br />{{ field.help_text }} <br /> {{ field }} <br /> {{ field.errors }}
-						<br />
-					{% endfor %} -->
-					 
-					<br>
+			<div class="panel panel-primary">
+			  <div class="panel-heading">Enter your text HERE (DO NOT USE the character ">")</div>
+			      <div class="panel-body">
+			      	<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_1' %}">
+					{% csrf_token %}					 
 					{{ text_form.non_field_errors }}
 					<div class="text_area" >
 					    {{ text_form.text_area.help_text }} <br />
@@ -28,7 +17,14 @@
 					    {{ text_form.text_area.errors }}
 					</div>
 
+					<div class="select-box">
+						<span>
+							{{ text_form.language_choice }} 
+							{{ text_form.language_choice.help_text }}
+						</span>
+					</div>
 					<div class="checkbox">
+						
 						<span>
 							{{ text_form.remove_stopwords }} 
 							{{ text_form.remove_stopwords.help_text }}	
@@ -54,37 +50,27 @@
 							{{ text_form.remove_url }} 
 							{{ text_form.remove_url.help_text }}
 						</span>
-
 					</div>
-						
 						<br><br>
-					<input type="submit" value="Process" class="process">
-					  
-				</form>
+					<input type="submit" value="Process" class="process"> 
+				</form>	
 
+			      </div>
+			</div>
+				
 		</div>
-
-
-		
 		<div class="column side">
-			<br>
-			<label for="text_result">Result will be shown HERE</label><br />
-			<textarea id="text_result" rows="20" cols="80">
-				{{ result_text }}
+			<div class="panel panel-primary">
+			  <div class="panel-heading">Result will be shown HERE</div>
+			      <div class="panel-body">
+<!-- 						<label for="text_result">Result will be shown HERE</label><br /> -->
+						<textarea id="text_result" rows="20" cols="80" >{{ result_text }}</textarea>
 
-			</textarea>
-
-<!-- 			<label for="text_result">Result</label><br />
-			<textarea id="text_result" rows="20" cols="80">{{result_text}}</textarea> -->
-
+			      </div>
+			</div>
 		</div>
-		
-
-
 	</div>	
-
 </div>
-
 
 {% endblock %}
 

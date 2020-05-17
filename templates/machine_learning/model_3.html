@@ -1,111 +1,58 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block content %}
 <div class="models">
-
 	<div class="row">
-
 		<div class="column middle">
-			
-			<h1>Titanic Survival Prediction</h1>
+			<div class="panel panel-primary">
+              <div class="panel-heading">Titanic Survival Prediction</div>
+	             <div class="panel-body">
+					<div class="form-query">
+						<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_3' %}">
+							{% csrf_token %}
 
-			<div class="form-query">
-				<form role="form" id = "page_form" method="post" action="{% url 'machine-learning:model_3' %}">
-					{% csrf_token %}
+							{% for hidden in form.hidden_fields %}
+								{{ hidden }}
+							{% endfor %}
 
-					{% for hidden in form.hidden_fields %}
-						{{ hidden }}
-					{% endfor %}
-
-					{% for field in form.visible_fields %}
-						<br />{{ field.help_text }} {{ field }}  {{ field.errors }}
-						<br />
-					{% endfor %}
-					<br>
-					<input type="submit" value="Predict">
-				</form>
-
-			</div>
-			<br />
-			<br />
+							{% for field in form.visible_fields %}
+								<br />{{ field.help_text }} {{ field }}  {{ field.errors }}
+								<br />
+							{% endfor %}
+							<br>
+							<input type="submit" value="Predict">
+						</form>
+					</div>
+	            </div>
+            </div>
 			<hr />
-		
-<!-- 			<div class="result">
-				<h1>Prediction</h1>
-
-				<table>
-					
-						<tr>
-							<th>---</th>
-							<th>Result</th>
-							<th>Probability (%)</th>
-						</tr>
-					
-					
-						<tr>
-							<td>--</td>
-							<td id="category">{{predicted_category}}</td>
-							<td id="probability">{{probability}}</td>
-						</tr>
-					
-				</table>
-			</div> -->
 
 		</div>	
 
 		<div class="column side">
-<!-- 			<div class="result">
-				<h1>Prediction</h1>
 
-				<table>
-					
-						<tr>
-							<th>---</th>
-							<th>Result</th>
-							<th>Probability (%)</th>
-						</tr>
-					
-					
-						<tr>
-							<td>--</td>
-							<td id="category">{{predicted_category}}</td>
-							<td id="probability">{{probability}}</td>
-						</tr>
-					
-				</table>
-			</div>
-
-			<h3><a href="https://www.kaggle.com/c/titanic"> Kaggle Titanic</a></h3>
-			<p><h4> The competition is simple: use machine learning to create a model that predicts which passengers survived the Titanic shipwreck.</h4></p>
-			<p><h4> On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” RMS Titanic sank after colliding with an iceberg.</h4></p>
-			<p><h4> Unfortunately, there weren’t enough lifeboats for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.</h4></p>
-			<p><h4> While there was some element of luck involved in surviving, it seems some groups of people were more likely to survive than others.</h4></p>
-			<p><h4> In this challenge, we ask you to build a predictive model that answers the question: “what sorts of people were more likely to survive?”</h4></p>
-			<p><h4> using passenger data (ie name, age, gender, socio-economic class, etc).</h4></p> -->
-
-			<div class="panel panel-model">
-				<h3 class="result">Result</h3>
+			<div class="panel panel-primary">
+              <div class="panel-heading">Result</div>
+	              <div class="panel-body">
+		            {% if predicted_category and probability %}
+						<p><strong>{{predicted_category}}</strong></p>
+						<p>Probability: {{probability}} %</p>
+					{% else %}
+						<p>Make A Prediction First</p>
+						<p>Probability: No Prediction Available</p>
+					{% endif %}
+	              </div>
+            </div>
+	            <p><h4> Use machine learning to create a model that predicts which passengers survived the Titanic shipwreck, using passenger data </h4></p>
+	            <p><h4> (ie name, age, gender, socio-economic class, etc). On April 15, 1912, the widely considered “unsinkable” Titanic sank after </h4></p>
+				<p><h4> colliding with an iceberg. Unfortunately, there weren’t enough lifeboats for everyone onboard, resulting in the death of 1502 </h4></p>
+				<p><h4> out of 2224 passengers and crew.</h4></p>
+				<p><h4> Average Passenger Fare for a 3rd Class: 13 pounds, for a 2nd Class: 20 pounds, for a 1st class: 84 pounds. Max is 512 Pounds</h4></p>
 				
-				{% if predicted_category and probability %}
-					<p><strong>{{predicted_category}}</strong></p>
-					<p>Probability: {{probability}}</p>
-				{% else %}
-					<p>No prediction available</p>
-					<p>Probability: No prediction available</p>
-				{% endif %}
-					
-				
-				
-				  
-			</div>
-			<br />
-			<hr />
-		
-
-	
+				<br />
+				<a href="https://www.kaggle.com/c/titanic">Kaggle-Titanic</a>
+				<hr />
 		
 		</div>	
 
@@ -113,130 +60,4 @@
 </div>
 
 
-<!-- 	<br><br><br><br><br>
-	<h2>Alternatif Form as_p aşağıda</h2>
-	<form method="POST">
-		{% csrf_token %}
-		{{ form.as_p }}
-
-		<button type="submit">Predict sss</button>
-		
-	</form>
- -->
-
-
-<!-- 	<div class="select-label">
-	<h1>Selectbox aşağıda</h1>
-		<h3>Model 333333 inşallah.....</h3>
-		<p>
-			Select one :
-			<select id="select-box">
-				<option value="free">Free</option>
-				<option value="basic">Basic</option>
-				<option value="premium">Premium</option>
-			</select>
-		</p>
-		<p>
-			The value:
-			<span class="output"></span>
-		</p>	
-		<button onclick="getOptionExample()">Check Option</button>
-	</div>
-	
-
-</div>
-
-
-
-
-<script type="text/javascript">
-		function getOption(){
-			selectElement = document.querySelector('#passenger_class');
-
-			output = selectElement.value;
-
-			document.querySelector('.select-output').textContent = output;
-		}
-
-		function getOptionExample(){
-			selectElement = document.querySelector('#select-box');
-
-			output = selectElement.value;
-
-			document.querySelector('.output').textContent = output;
-		}
-
-</script> -->
-	
-
 {% endblock %}
-
-
-
-<!-- <div class="form-group">
-                <label for="passenger_class">Passenger Class: </label>             
-                <select id="passenger_class">
-                    
-                        <option value="first">First Class</option>
-                        <option value="second">Second Class</option>
-                        <option value="third">Third Class</option> 
-
-                </select>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="passenger_gender">Passenger Gender: </label>               
-                <select id="passenger_gender">
-               
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>   
-
-                </select>
-            </div>
-            <br>
-
-            <div class="form-group">
-                <label for="sibling_spouse">Number of siblings and spouse: </label>
-                <select id="sibling_spouse">
-                    
-                        <option value="zero">0</option>
-                        <option value="one">1</option>
-                        <option value="two">2</option>
-                        <option value="three">3</option>
-                        <option value="four">4</option>   
-
-                </select>
-            </div>
-            <br>
-
-            <div class="form-group">
-                <label for="parent_children">Number of parents and children: </label>
-                <select id="parent_children">
-                    
-                        <option value="zero">0</option>
-                        <option value="one">1</option>
-                        <option value="two">2</option>
-                        <option value="three">3</option>
-                        <option value="four">4</option>   
-
-                </select>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="passenger_age">Passenger Age: </label>
-                <input type="text" name="passenger_age", placeholder="Age">
-            </div>
-            <br>
-
-            <div class="form-group">
-                <label for="passenger_fare">Passenger Fare: </label>
-                <input type="text" name="passenger_fare", placeholder="Fare">
-            </div>
-            <br>
-            <br>
-			
-            <button class="btn btn-primary" type="submit" name="Submit" onclick="getOption()"> Predict </button>
-            <br><br>
-
-            The value:
-			<span class="select-output"></span> -->

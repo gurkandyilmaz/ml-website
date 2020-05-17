@@ -21,13 +21,10 @@ import numpy as np
 
 ml_models_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ml_models_joblib')
 
-# Create your views here.
+
 @login_required
 def model_1(request):
-	
-
 	processor = Preprocess()
-	#tokenized = processor.word_tokenize("Hi my name is grkn i am 45 years old and i like hiking.")
 
 	if request.user.is_authenticated:
 		username = request.user.username
@@ -35,42 +32,31 @@ def model_1(request):
 	if request.method == "POST":
 		text_form = TextProcessingForm(request.POST)
 		
-
 		if text_form.is_valid():
 			text = text_form.save(commit=False)
 			text.user = username
 			text.processing_time = timezone.now()
 			text.save()
 			
-
 			raw_text = text_form.cleaned_data.get('text_area')
+			language_choice = text_form.cleaned_data.get('language_choice')
 			make_lowercase = text_form.cleaned_data.get('make_lowercase')
 			remove_stopwords = text_form.cleaned_data.get('remove_stopwords')
 			remove_numbers = text_form.cleaned_data.get('remove_numbers')
 			remove_html_tags = text_form.cleaned_data.get('remove_html_tags')
 			remove_special_characters = text_form.cleaned_data.get('remove_special_characters')
 			remove_url = text_form.cleaned_data.get('remove_url')
-
-			# Start preprocessing
-			# tokenized_text = processor.word_tokenize(text.text_area)
 			
-			# stopwords_removed = processor.remove_stopwords(tokenized_text)
-			# numbers_removed = processor.remove_numbers(text.text_area)
-			# special_characters_removed = processor.remove_special_characters(text.text_area)
-			# html_tags_removed = processor.remove_html_tags(text.text_area)
-			# url_removed = processor.remove_url(text.text_area)
-			processed_text = select_parameters(raw_text, make_lowercase=make_lowercase, remove_stopwords=remove_stopwords, remove_numbers=remove_numbers, 
+			processed_text = select_parameters(raw_text, language_choice=language_choice, make_lowercase=make_lowercase, remove_stopwords=remove_stopwords, remove_numbers=remove_numbers, 
                       remove_html_tags=remove_html_tags, remove_special_characters=remove_special_characters, remove_url=remove_url)
 			
 			related_text = TextProcessing.objects.get(id=text.id)
 			result_text = TextProcessingResult(related_text=related_text, text_result=processed_text, text_result_time=timezone.now())
 			result_text.save()
-			# result_form = TextProcessingResultForm()			
-
+					
 			return render(request, 'machine_learning/model_1.html', context={"text_form":text_form, "result_text":result_text.text_result, "model_1_status": "active"})
 	else:
 		text_form = TextProcessingForm()
-		# result_form = TextProcessingResultForm()
 
 	return render(request, 'machine_learning/model_1.html', context={"text_form":text_form, "model_1_status": "active"})
 
@@ -123,7 +109,6 @@ def model_2(request):
 		query_form = QueryForm()
 		query_predicted = "No predictions Available"
 
-
 	return render(request, 'machine_learning/model_2.html', context={'form': query_form, 'y_predicted':query_predicted, 'model_2_status':"active"})
 
 
@@ -136,7 +121,6 @@ def model_3(request):
 
 	with open(standart_scaler_path, 'rb') as stdscaler:
 		standart_scaler = joblib.load(stdscaler)
-
 
 	with open(knn_clf_path, 'rb') as knnclf:
 		knn_clf = joblib.load(knnclf)
@@ -181,10 +165,9 @@ def model_3(request):
 			elif predicted_category[0] == 0:
 				category_predicted = "Died"
 			
-			probability = 100*np.round(max(probability[0]), 4)
+			probability = np.round_(100*max(probability[0]), decimals=2)
 			
 			return render(request, 'machine_learning/model_3.html', context={'form': query_form, 'predicted_category':category_predicted, 'probability':probability, 'model_3_status':'active'})
-
 	else:
 		query_form = TitanicQueryForm()
 		query_predicted = "No predictions Available"

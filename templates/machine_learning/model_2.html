@@ -1,64 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block content %}
 
 <div class="models">
-
 	<div class="row">
-		<div class="columns side">
-			
+		<div class="columns side">	
 		</div>
-
 		<div class="columns middle">
-			<form method="POST" >
-				{% csrf_token %}
-				{{ form.as_p }}
+			<div class="panel panel-primary">
+			  <div class="panel-heading">Under Construction</div>
+			      <div class="panel-body">
+			      	Under Construction ...
+<!-- 						<form method="POST" >
+							{% csrf_token %}
+							{{ form.as_p }}
+							<button type="submit" >Predict</button>
+						</form>
+						<h3><strong>Prediced Results:</strong></h3>
+						<p>{{y_predicted}}</p>
+						<h3><strong>R2 Score:</strong></h3>
+						<p>{{ r2_score }}</p>
 
-				<button type="submit" >Predict</button>
-			</form>
-
-			<h3><strong>Prediced Results:</strong></h3>
-			<p>{{y_predicted}}</p>
-			<h3><strong>R2 Score:</strong></h3>
-			<p>{{ r2_score }}</p>
-
-			<strong>Query : Result </strong>
-			{% for query, result in query_prediction %}
-					<li><strong>{{ query }}: {{ result }}</strong></li>
-			{% endfor %}
-
-
-			<br><br><br><br><br><br><br>
-
-			<b>İkinci alternatif form</b>
-			<form role="form" id = "page_form" method="post" action="#">
-
-					{% csrf_token %}
-					{% for hidden in form.hidden_fields %}
-						{{ hidden }}
-					{% endfor %}
-
-					{% for field in form.visible_fields %}
-						
-						<br>{{ field.help_text }} {{ field }} {{ field.errors }}<br>
-					{% endfor %}
-					<br/>
-					<button class="btn btn-primary" type="submit" name="Submit"> Add the Page </button>
-			</form>
+						<strong>Query : Result </strong>
+						{% for query, result in query_prediction %}
+								<li><strong>{{ query }}: {{ result }}</strong></li>
+						{% endfor %} -->
+			      </div>
+			</div>	
 		</div>
-		<div class="columns side">
-			
-		</div>
-		
 
 	</div>	
-	
-
 </div>
-
-	
 
 {% endblock %}

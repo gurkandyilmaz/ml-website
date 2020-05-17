@@ -34,9 +34,9 @@
 				<i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content" id="myDropdown">
-				<a class="{{ model_1_status }}" href="{% url 'machine-learning:model_1' %}">Model 1</a>
+				<a class="{{ model_1_status }}" href="{% url 'machine-learning:model_1' %}">Text Preprocessing</a>
 				<a class="{{ model_2_status }}" href="{% url 'machine-learning:model_2' %}">Model 2</a>
-				<a class="{{ model_3_status }}" href="{% url 'machine-learning:model_3' %}">Model 3</a>
+				<a class="{{ model_3_status }}" href="{% url 'machine-learning:model_3' %}">Titanic Survival</a>
 			</div>
 		</div>
 
@@ -59,10 +59,13 @@
 			<div class="panel panel-jumbo">
 				<h3 class="welcome">Welcome!</h3>
 				{% if user.is_authenticated %}
-					<p>Selam, {{ user.username }}</p>
+					<p>Hi, {{ user.username }}</p>
 					<p>Last Login: {{ user.last_login }}</p>
 					<p>Registered at: {{ user.date_joined }}</p>
 				{% else %}
+					<p>This website was built to host some of the Machine Learning and Natural Langugage Processing projects which i implemented while i was learning the frameworks/libraries, and a separate blog page which i may update in the near future.</p> 
+					<p>You need to <a href="{% url 'login-page' %}">login</a> or <a href="{% url 'register-page' %}">register</a> and then login to access the Machine Learning page.</p>
+					<br />
 					<a href="https://pbs.twimg.com/media/BVvHBzgCEAE9fu2.jpg" target="_blank">BEDAVA TATİL FIRSATI !!!</a>
 				{% endif %}
 				  
@@ -72,9 +75,10 @@
               <div class="panel-heading">Available Models</div>
 	              <div class="panel-body">
 	                <ol>
-	                  <li>Titanic Survival Prediction</li>
-	                  <li>Twitter Toxic Comment Classification</li>
-	                  <li>Text Preprocessing</li>
+	                 	<li>Text Preprocessing - remove stopwords, special characters, numbers, html tags, url.</li>
+	                 	<li>-------</li>
+	                 	<li>Titanic Survival - Predict if a person survived after the crash.</li>
+	                  
 	                  <li>-------</li>
 	                  <li>-------</li>
 	                </ol>
@@ -125,49 +129,6 @@ function topFunction() {
 	document.documentElement.scrollTop = 0;
 }
 </script>
-
-
-<!-- <script>
-// Dropdown Menu
-/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
-    }
-  }
-}
-</script>
-<script type="text/javascript">
-// Top scroll button
-topbutton = document.getElementById('topBtn');
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction(){
-	if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-		topbutton.style.display = "block";
-	} else {
-		topbutton.style.display = "none";
-	}
-}
-
-function topFunction() {
-	document.body.scrollTop = 0;
-	document.documentElement.scrollTop = 0;
-}
-
-</script> -->
-
-
-
-	
-
 
 </body>
 </html>

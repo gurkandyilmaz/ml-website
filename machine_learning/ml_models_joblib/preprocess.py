@@ -6,13 +6,13 @@ from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
 from bs4 import BeautifulSoup
 
 
-
 print(__name__)
 
 class Preprocess():
     
     def __init__(self):
         self.eng_stopword_list = set(stopwords.words("english"))
+        self.tr_stopwords_list = stopwords.words("turkish")
         # 'no' and 'not' may be useful in sentiment analysis
         self.eng_stopword_list.remove('no')
         self.eng_stopword_list.remove('not')
@@ -30,8 +30,13 @@ class Preprocess():
         return self.lowercase_text
     
     
-    def remove_stopwords(self, tokenized_text):
-        self.stopwords_removed = [element for element in tokenized_text if element.lower() not in self.eng_stopword_list]
+    def remove_stopwords(self, tokenized_text, language_choice):
+        if language_choice=='turkish':
+            self.stopword_list = self.tr_stopwords_list
+        elif language_choice=='english':
+            self.stopword_list = self.eng_stopword_list
+
+        self.stopwords_removed = [element for element in tokenized_text if element.lower() not in self.stopword_list]
         self.stopwords_removed = " ".join(self.stopwords_removed)
         
         return self.stopwords_removed
@@ -69,13 +74,19 @@ class Preprocess():
         return self.url_removed
 
     
-def select_parameters(text, make_lowercase=False, remove_stopwords=False, remove_numbers=False, 
+def select_parameters(text, language_choice='turkish', make_lowercase=False, remove_stopwords=False, remove_numbers=False, 
                       remove_html_tags=False, remove_special_characters=False, remove_url=False):
     
     processor = Preprocess()
     
     if text == ">":
-        return "***** SAZAN.AVI ***** HA BU YEM DUR ***** \n Ne meraklı milletiz ya"
+        return "***** SAZAN.AVI ***** HA BU YEM DUR *****"
+    elif text.lower() == "product":
+        return "Anıl \nAysel Hanım \nFunda \nGürkan \nOzan Abi"
+    elif text.lower() == "qa":
+        return "Buddy Mustafa"
+    elif text.lower() == "backend":
+        return "Anıl Dilek \nAnıl Selvi \nFaruk \nHasanHüseyin \nHüseyin"
     
     
     if remove_url:
@@ -95,7 +106,7 @@ def select_parameters(text, make_lowercase=False, remove_stopwords=False, remove
     
     if remove_stopwords:
         tokenized_text = processor.word_tokenize(text)
-        text = processor.remove_stopwords(tokenized_text)
+        text = processor.remove_stopwords(tokenized_text, language_choice)
         
     return text
     
