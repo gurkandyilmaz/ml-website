@@ -28,7 +28,7 @@ SECRET_KEY = '+wlzc(%+sutn4kzez7h3mb455-jn)b-bxwjt^j0wxx86ieu&en'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # DEBUG = True
-DEBUG = bool(os.environ.get("DEBUG", False))
+DEBUG = bool(os.environ.get("DEBUG", True))
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com' , '0.0.0.0', 'localhost']
 
@@ -136,6 +136,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (STATIC_DIR, )
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
