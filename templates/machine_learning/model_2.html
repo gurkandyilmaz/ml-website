@@ -5,30 +5,103 @@
 
 <div class="models">
 	<div class="row">
-		<div class="columns side">	
-		</div>
-		<div class="columns middle">
+		<div class="column middle">
 			<div class="panel panel-primary">
-			  <div class="panel-heading">Under Construction</div>
+			  <div class="panel-heading">Customer Churn Prediction</div>
 			      <div class="panel-body">
-			      	Under Construction ...
-<!-- 						<form method="POST" >
-							{% csrf_token %}
-							{{ form.as_p }}
-							<button type="submit" >Predict</button>
-						</form>
-						<h3><strong>Prediced Results:</strong></h3>
-						<p>{{y_predicted}}</p>
-						<h3><strong>R2 Score:</strong></h3>
-						<p>{{ r2_score }}</p>
+						<form role="form" id="page_form" method="post" action="{% url 'machine-learning:model_2' %}">
+							{% csrf_token %}	
 
-						<strong>Query : Result </strong>
-						{% for query, result in query_prediction %}
-								<li><strong>{{ query }}: {{ result }}</strong></li>
-						{% endfor %} -->
+							{{ form.non_field_errors }}
+							<div>
+								<br>
+								{{ form.tenure.help_text }}{{ form.tenure }} {{ form.tenure.errors }}
+							</div>
+
+							<div class="select-box">
+								<p>
+									{{ form.internet_service.help_text }}
+									{{ form.internet_service }}
+									 
+								</p>
+								<p>
+									{{ form.payment_method.help_text }}
+									{{ form.payment_method }} 
+								</p>
+							</div>
+							<div class="checkbox">
+								<span>
+									{{ form.svc_clf }}
+									<label>{{ form.svc_clf.help_text }}</label>	
+								</span>
+								<span>
+									{{ form.knn_clf }}
+									<label>{{ form.knn_clf.help_text }}</label> 	
+								</span>
+								<span>
+									{{ form.rand_clf }} 
+									<label>{{ form.rand_clf.help_text }}</label>	
+								</span>
+								<span>
+									{{ form.ada_clf }} 
+									<label>{{ form.ada_clf.help_text }}</label>	
+								</span>
+							</div>
+								<br><br>
+							<input type="submit" value="Process" class="process"> 
+						</form>	
 			      </div>
+			      
 			</div>	
+			<hr />
 		</div>
+
+		<div class="column side">
+
+			<div class="panel panel-primary">
+              <div class="panel-heading">Results for the Selected Models</div>
+	              <div class="panel-body">
+	              		{% if not results.result %}
+							<p>Select at least one model to see the result</p>
+		            	{% else %}
+		            		{% if results.svc_clf.status %}
+				            	<strong>SVC</strong>
+				            	<p>
+				            		<u>{{ results.svc_clf.predicted_result }}</u>,
+									{{ results.svc_clf.predicted_proba }}	
+				            	</p>
+				            {% endif %}
+							{% if results.knn_clf.status %}
+								<strong>KNN</strong>
+								<p>
+									<u>{{ results.knn_clf.predicted_result }}</u>,
+									{{ results.knn_clf.predicted_proba }}
+								</p>
+							{% endif %}
+							{% if results.rand_clf.status %}
+								<strong>RandomForest</strong>
+								<p>
+									<u>{{ results.rand_clf.predicted_result }}</u>,
+									{{ results.rand_clf.predicted_proba }}
+								</p>
+							{% endif %}
+							{% if results.ada_clf.status %}
+								<strong>AdaBoost</strong>
+								<p>
+									<u>{{ results.ada_clf.predicted_result }}</u>,
+									{{ results.ada_clf.predicted_proba }}
+								</p>
+							{% endif %}
+						{% endif %}				
+					
+	              </div>
+            </div>
+<!-- 	            <p><h4> Use machine learning  </h4></p>		
+				<br />
+				<a href="https://www.kaggle.com/blastchar/telco-customer-churn">Kaggle-Telco-Churn</a> -->
+				<hr />
+		
+		</div>	
 
 	</div>	
 </div>

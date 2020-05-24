@@ -138,7 +138,7 @@ body {
 
 .panel {
 	margin-bottom: 20px;
-	background-color: #fff;
+	background-color: #eee;
 	border: 2px solid transparent;
 	border-radius: 6px;
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -184,28 +184,30 @@ body {
 	margin-right: 40px;
 }
 
-.panel-primary > .panel-heading {
+.panel-heading {
+	font-size: 20px;
 	color: #fff;
 	background-color: #333;
-	border-color: #333; 
-}
-
-.panel-heading {
+	border-color: #333;
 	padding: 10px 15px;
 	border-bottom: 1px solid transparent;
 	border-top-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-top-right-radius: 3px;
+	
 }
 
-.panel > .panel-body {
+.panel-body {
+	font-size: 20px;
 	padding-top: 10px;
 }
+
+
 
 
 /* >>>>>>>>>>>> Machine Learning Model Style */
 .content .models {
 	padding-top: 30px;
-	padding-left: auto;
+	position: relative;
 }
 
 
@@ -232,13 +234,71 @@ width: 100%;
 	padding: 10px;
 }
 .content .models .column .side{
-	width: 20%;
+	width: 40%;
+
+}
+
+.content .models .column .panel{
+	width: 100%;
+	background-color: #eee;
+
+}
+
+.content .models .column .panel-heading{
+	font-size: 20px;
+
+}
+
+.content .models .column .panel-body{
+	font-size: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
 
 }
 
 .content .models .column .middle {
 	width: 60%;
 }
+
+.content .models .select-box {
+	position: relative;
+	padding-top: 10px;
+	
+	
+	
+}
+
+.content .models .select-box select{
+	position: relative;
+	width: 110px;
+	height: 30px;
+	
+	
+	
+}
+
+.content .models .checkbox {
+	position: relative;
+	padding-top: 10px;
+	
+}
+
+.content .models .checkbox input{
+	position: relative;
+	width: 25px;
+	height: 25px;
+
+	
+}
+.content .models .checkbox label{
+	display: inline-block;
+	padding-bottom: 5px;
+  	padding-left: 15px;
+  	text-indent: -15px;
+  	vertical-align: text-bottom;
+	
+}
+
 
 .content .models .row:after {
 	content: "";
@@ -247,11 +307,12 @@ width: 100%;
 }
 
 input[type=submit] {
+	position: relative;
 	width: 100%;
 	background-color: #808080;
 	color: white;
 	padding: 14px 20px;
-	margin: 8px 0;
+	margin-bottom: 20px;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -270,8 +331,10 @@ input[class='login-input'] {
 
 }
 
-
-
+textarea[id='text_result'] {
+	margin-top: 25px;
+	margin-bottom: 20px;
+}
 
 /*  Machine Learning Model Style <<<<<<<<<<<<< */
 
@@ -298,5 +361,7 @@ input[class='login-input'] {
 	background-repeat: no-repeat;
 	
   }
+
+
 
 }

@@ -1,21 +1,7 @@
 from django import forms
 
-from .models import Query, Prediction, TitanicQuery, TitanicPrediction, TextProcessing, TextProcessingResult
-
-
-class QueryForm(forms.ModelForm):
-	query_text = forms.CharField(max_length=200, help_text="Enter the query like 1,2,3")
-
-	class Meta:
-		model = Query
-		fields = ('query_text',)
-
-
-class PredictionForm(forms.ModelForm):
-
-	class Meta:
-		model = Prediction
-		fields = ('prediction_result', 'prediction_score',)
+from .models import TitanicQuery, TitanicPrediction, TextProcessing, TextProcessingResult
+from .models import TelcoChurnQuery, TelcoChurnPrediction
 
 
 class TitanicQueryForm(forms.ModelForm):
@@ -58,14 +44,18 @@ class TextProcessingForm(forms.ModelForm):
         }
 
 
-# class TextProcessingResultForm(forms.ModelForm):
+class TelcoChurnQueryForm(forms.ModelForm):
 
-# 	class Meta:
-# 		model = TextProcessingResult
-# 		fields = ('text_result',)
-# 		help_texts = {
-# 			'text_result':'The result will be shown HERE'
-# 			}
-# 		widgets = {
-#             'text_result': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
-#         }
+	class Meta:
+		model = TelcoChurnQuery
+		fields = ('tenure','internet_service','payment_method', 'svc_clf', 'knn_clf', 'rand_clf', 'ada_clf',)
+		help_texts = {
+		'tenure':'Contract Length in Months ',
+		'internet_service':'Type of the Internet Service ',
+		'payment_method':'Electronic payment ',
+		'svc_clf':'SupportVectorMachine',
+		'knn_clf':'KNearestNeighbors',
+		'rand_clf':'RandomForest',
+		'ada_clf':'AdaBoost',
+		}
+

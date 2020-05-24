@@ -35,7 +35,7 @@
 			</button>
 			<div class="dropdown-content" id="myDropdown">
 				<a class="{{ model_1_status }}" href="{% url 'machine-learning:model_1' %}">Text Preprocessing</a>
-				<a class="{{ model_2_status }}" href="{% url 'machine-learning:model_2' %}">Model 2</a>
+				<a class="{{ model_2_status }}" href="{% url 'machine-learning:model_2' %}">Customer Churn</a>
 				<a class="{{ model_3_status }}" href="{% url 'machine-learning:model_3' %}">Titanic Survival</a>
 			</div>
 		</div>
@@ -76,11 +76,8 @@
 	              <div class="panel-body">
 	                <ol>
 	                 	<li>Text Preprocessing - remove stopwords, special characters, numbers, html tags, url.</li>
-	                 	<li>Model 2</li>
+	                 	<li>Telco Customer Churn - Predict if a customer will churn given the contract details.</li>
 	                 	<li>Titanic Survival - Predict if a person survived after the crash.</li>
-	                  
-	                  <li>-------</li>
-	                  <li>-------</li>
 	                </ol>
 	              </div>
             </div>

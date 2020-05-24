@@ -6,7 +6,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
 from bs4 import BeautifulSoup
 
 
-print(__name__)
+print("Name: ", __name__)
 
 class Preprocess():
     
@@ -51,7 +51,7 @@ class Preprocess():
         
         
     def remove_special_characters(self, text):
-        regex = RegexpTokenizer('[a-zA-Z0-9]+')
+        regex = RegexpTokenizer('[a-zA-Z0-9ğüşıöçĞÜŞİÖÇ]+')
         self.special_characters_removed = regex.tokenize(text)
         self.special_characters_removed = " ".join(self.special_characters_removed)
         

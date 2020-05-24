@@ -7,11 +7,15 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import QueryForm, PredictionForm, TitanicQueryForm, TitanicPredictionForm, TextProcessingForm
-from .models import Query, Prediction, TitanicQuery, TitanicPrediction, TextProcessing, TextProcessingResult
+from .forms import TitanicQueryForm, TitanicPredictionForm, TextProcessingForm
+from .forms import TelcoChurnQueryForm
+from .models import TitanicQuery, TitanicPrediction, TextProcessing, TextProcessingResult
+from .models import TelcoChurnQuery, TelcoChurnPrediction
 
 # Preprocessing in model_1
 from .ml_models_joblib.preprocess import Preprocess, select_parameters
+# Churn data processing in model_2
+from .ml_models_joblib.churn_data_process import churn_data_process
 
 # model_2
 import os
@@ -63,58 +67,64 @@ def model_1(request):
 
 @login_required
 def model_2(request):
-	context = {"model_2_status": "active"}
 
-	regressor_path = os.path.join(ml_models_directory, 'linear_regressor.joblib')
-	r2_scorer_path = os.path.join(ml_models_directory, 'r2_scorer.joblib')
+	churn_models_path = os.path.join(ml_models_directory, 'churn_models.joblib')
 
-	with open(regressor_path, 'rb') as reg:
-		regressor = joblib.load(reg)
+	with open(churn_models_path, 'rb') as models_file:
+		minmax_scaler, svc_clf, knn_clf, rand_clf, ada_clf = joblib.load(models_file)
 
-	with open(r2_scorer_path, 'rb') as r2:
-		r2_scorer = joblib.load(r2)
-
-	x = [[5],[7],[8],[9]]
-	y = [5,6,7,7]
-
-	y_predicted = regressor.predict(x)
-	r2_score = r2_scorer(y,y_predicted)
+	if request.user.is_authenticated:
+		username = request.user.username
 
 	if request.method == 'POST':
-		query_form = QueryForm(request.POST)
+		query_form = TelcoChurnQueryForm(request.POST)
 
 		if query_form.is_valid():
-			query = query_form.save(commit=False)		
-			query.query_time = timezone.now()
-			query.save()
+			query_churn = query_form.save(commit=False)		
+			query_churn.query_time = timezone.now()
+			query_churn.user = username
+			query_churn.save()
+
+			tenure = query_form.cleaned_data.get('tenure')
+			internet_service = query_form.cleaned_data.get('internet_service')
+			payment_method = query_form.cleaned_data.get('payment_method')
 			
-			query_converted = []
-			for q in query.query_text.split(","):
-				q = float(q)
-				query_converted.append([q])
+			svc_clf_status = query_form.cleaned_data.get('svc_clf')
+			knn_clf_status = query_form.cleaned_data.get('knn_clf')
+			rand_clf_status = query_form.cleaned_data.get('rand_clf')
+			ada_clf_status = query_form.cleaned_data.get('ada_clf')
+			
+			# Process the form data to use in the clfs
+			clfs = {'minmax_scaler':minmax_scaler, 'svc_clf':svc_clf, 'knn_clf':knn_clf, 'rand_clf':rand_clf, 'ada_clf':ada_clf}
+			form_data = {'tenure':tenure, 'internet_service':internet_service, 'payment_method':payment_method}
+			status = {'svc_clf_status':svc_clf_status,
+			          'knn_clf_status':knn_clf_status,
+			          'rand_clf_status':rand_clf_status,
+			          'ada_clf_status':ada_clf_status}
 
-			query_predicted = np.round(regressor.predict(query_converted),4)
-			query_prediction = zip(query_converted, query_predicted)
-			if len(y) == len(query_predicted):
-				r2 = r2_scorer(y, query_predicted)
-			r2 = 0.0
-			related_query = Query.objects.get(query_text=query.query_text, pk=query.id)
-
-			prediction = Prediction(related_query=related_query, prediction_result=query_predicted, prediction_score=r2)
+			results = churn_data_process(clfs=clfs, form_data=form_data, status=status)
+			related_query = TelcoChurnQuery(id=query_churn.id)
+			prediction = TelcoChurnPrediction(related_query=related_query, 
+				result_svc=results['svc_clf']['predicted_result'],result_proba_svc=results['svc_clf']['predicted_proba'],
+				result_knn=results['knn_clf']['predicted_result'],result_proba_knn=results['knn_clf']['predicted_proba'],
+				result_rand=results['rand_clf']['predicted_result'],result_proba_rand=results['rand_clf']['predicted_proba'],
+				result_ada=results['ada_clf']['predicted_result'],result_proba_ada=results['ada_clf']['predicted_proba'],prediction_time=timezone.now())
 			prediction.save()
 
-			return render(request, 'machine_learning/model_2.html', context={'form': query_form, 'y_predicted':query_predicted, 'query_prediction':query_prediction, 'r2_score':r2})
+
+			print("RESULTS: {0}".format(results))
+
+			return render(request, 'machine_learning/model_2.html', context={'form':query_form, 'results':results, "model_2_status": "active"})
 
 	else:
-		query_form = QueryForm()
+		query_form = TelcoChurnQueryForm()
 		query_predicted = "No predictions Available"
 
-	return render(request, 'machine_learning/model_2.html', context={'form': query_form, 'y_predicted':query_predicted, 'model_2_status':"active"})
+	return render(request, 'machine_learning/model_2.html', context={'form':query_form, 'model_2_status':"active"})
 
 
 @login_required
 def model_3(request):
-	context = {"model_3_status": "active"}
 
 	standart_scaler_path = os.path.join(ml_models_directory, 'standart_scaler.joblib')
 	knn_clf_path = os.path.join(ml_models_directory, 'knn_clf.joblib')

@@ -7,29 +7,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator, MaxLeng
 # Create your models here.
 
 
-class Query(models.Model):
-	query_text = models.CharField(max_length=200)
-	query_time = models.DateTimeField(default=timezone.now)
-
-	def __str__(self):
-		return self.query_text
-
-
-class Prediction(models.Model):
-	related_query = models.ForeignKey(Query, on_delete=models.CASCADE)
-	prediction_result = models.CharField(max_length=200)
-	prediction_score = models.DecimalField(max_digits=9, decimal_places=7)
-
-
-	def __str__(self):
-		return self.prediction_result
-
-
 class TitanicQuery(models.Model):
 	class_choices = [(1,'First Class'), (2,'Second Class'), (3,'Third Class'),]
 	gender_choices = [('female', 'Female'),('male', 'Male'),]
 
 	user = models.CharField(max_length=100, default="None")
+	query_time = models.DateTimeField(default=timezone.now)
 
 	passenger_class = models.IntegerField(choices=class_choices, validators=[MinValueValidator(limit_value=0)])
 	
@@ -42,8 +25,6 @@ class TitanicQuery(models.Model):
 	parent_children = models.IntegerField(validators=[MinValueValidator(limit_value=0), MaxValueValidator(limit_value=10)])
 	
 	passenger_fare = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(limit_value=0)])
-	
-	query_time = models.DateTimeField(default=timezone.now)
 
 
 	class Meta:
@@ -73,8 +54,7 @@ class TextProcessing(models.Model):
 	language_choices = [('turkish', 'TR'),('english', 'ENG')]
 
 	user = models.CharField(max_length=100, default="None")
-	text_area = models.TextField(validators=[MaxLengthValidator(1000)])
-	# text_area = models.CharField(max_length=1000)
+	text_area = models.TextField(validators=[MaxLengthValidator(2023)])
 	processing_time = models.DateTimeField(default=timezone.now)
 
 	language_choice = models.CharField(max_length=10, choices=language_choices, default='TR')
@@ -96,7 +76,7 @@ class TextProcessing(models.Model):
 
 class TextProcessingResult(models.Model):
 	related_text = models.ForeignKey(TextProcessing, on_delete=models.CASCADE)
-	text_result = models.CharField(max_length=1000)
+	text_result = models.CharField(max_length=2023)
 	text_result_time = models.DateTimeField(default=timezone.now)
 
 
@@ -106,3 +86,49 @@ class TextProcessingResult(models.Model):
 
 	def __str__(self):
 		return self.related_text.text_area[:10]
+
+
+class TelcoChurnQuery(models.Model):
+	internet_service_choices = [(0,'Fiber-Optic'),(1,'DSL'),(2,'No-Internet')]
+	payment_method_choices = [(0,'No'),(1,'Yes')]
+	
+	user = models.CharField(max_length=100, default="None")
+	query_time = models.DateTimeField(default=timezone.now)
+
+	tenure = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
+	internet_service = models.IntegerField(choices=internet_service_choices, default='No-Internet')
+	payment_method = models.IntegerField(choices=payment_method_choices, default='No')
+
+	svc_clf = models.BooleanField(default=False)
+	knn_clf = models.BooleanField(default=False)
+	rand_clf = models.BooleanField(default=False)
+	ada_clf = models.BooleanField(default=False)
+
+	class Meta:
+		verbose_name_plural = "Telco Churn Queries"
+
+	def __str__(self):
+		return self.user
+
+
+class TelcoChurnPrediction(models.Model):
+	related_query = models.ForeignKey(TelcoChurnQuery, on_delete=models.CASCADE)
+	prediction_time = models.DateTimeField(default=timezone.now)
+
+	result_svc = models.CharField(max_length=10)
+	result_proba_svc = models.DecimalField(default=-1.0, max_digits=5, decimal_places=4) 
+
+	result_knn = models.CharField(max_length=10)
+	result_proba_knn = models.DecimalField(default=-1.0, max_digits=5, decimal_places=4) 
+
+	result_rand = models.CharField(max_length=10)
+	result_proba_rand = models.DecimalField(default=-1.0, max_digits=5, decimal_places=4) 
+
+	result_ada = models.CharField(max_length=10)
+	result_proba_ada = models.DecimalField(default=-1.0, max_digits=5, decimal_places=4) 
+
+	class Meta:
+		verbose_name_plural="Telco Churn Predictions"
+
+	def __str__(self):
+		return	self.result_svc
