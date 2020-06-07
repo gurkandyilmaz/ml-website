@@ -80,13 +80,15 @@ def select_parameters(text, language_choice='turkish', make_lowercase=False, rem
     processor = Preprocess()
     
     if text == ">":
-        return "***** SAZAN.AVI ***** HA BU YEM DUR *****"
+        return "***** Ne kadarda meraklı milletiz. Basmayın yazıyor orda :) *****"
     elif text.lower() == "product":
         return "Anıl \nAysel Hanım \nFunda \nGürkan \nOzan Abi"
     elif text.lower() == "qa":
         return "Buddy Mustafa"
     elif text.lower() == "backend":
         return "Anıl Dilek \nAnıl Selvi \nFaruk \nHasanHüseyin \nHüseyin"
+    elif text.lower() == "model":
+        return "Model Ekibi"
     
     
     if remove_url:

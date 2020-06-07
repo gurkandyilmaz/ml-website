@@ -118,7 +118,7 @@ def model_2(request):
 
 	else:
 		query_form = TelcoChurnQueryForm()
-		query_predicted = "No predictions Available"
+		
 
 	return render(request, 'machine_learning/model_2.html', context={'form':query_form, 'model_2_status':"active"})
 
