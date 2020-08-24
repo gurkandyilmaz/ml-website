@@ -68,7 +68,7 @@ def model_1(request):
 @login_required
 def model_2(request):
 
-	churn_models_path = os.path.join(ml_models_directory, 'churn_models.joblib')
+	churn_models_path = os.path.join(ml_models_directory, 'churn_models_v2.joblib')
 
 	with open(churn_models_path, 'rb') as models_file:
 		minmax_scaler, svc_clf, knn_clf, rand_clf, ada_clf = joblib.load(models_file)
